@@ -1,0 +1,174 @@
+:root {
+    --bg-c-1: #484c67;
+    --bg-c-2: #37394e;
+    --orange: #e98850;
+    --red: #e24379;
+    --blue: #01567d;
+    --green: #44de00;
+  }
+  
+  body {
+    height: 100vh;
+    margin: auto;
+    color: #eee;
+    text-shadow: 4px 4px 5px #333;
+    background-color: var(--bg-c-1);
+    position:relative;
+    text-align: center;
+  }
+  .flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .workout-timer-container {
+    width: 600px;
+  }
+  
+  .title {
+    font-size: 6rem;
+    text-align: center;
+    margin: 15vh 0;
+  }
+  
+  h4 {
+    text-align: center;
+  }
+  
+  .inputs-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: var(--bg-c-2);
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 15px 10px #333;
+    transition: all 0.2s ease;
+  }
+  .inputs-container:hover {
+    box-shadow: 0 10px 5px #333;
+    transition: all 0.2s ease;
+  }
+  .input-group {
+    padding: 1rem;
+  }
+  label.roundTime {
+    font-size: 1.1rem;
+    color: var(--red);
+  }
+  label.restTime {
+    font-size: 1.1rem;
+    color: var(--orange);
+  }
+  input {
+    color: var(--orange);
+  
+    font-size: 2rem !important;
+    max-width: 120px;
+    text-align: center;
+  }
+  input::placeholder {
+    color: #999;
+  }
+  input#roundTime {
+    color: var(--red);
+  }
+  input#roundTime:hover {
+    border-bottom: 1px solid var(--red);
+  }
+  input#restTime:hover {
+    border-bottom: 1px solid var(--orange);
+  }
+  
+  .btn {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: var(--green);
+    color: var(--bg-c-1);
+    font-size: 1.4rem;
+    font-weight: 500;
+    box-shadow: 0 15px 10px #333;
+    border: 2px solid #333;
+  }
+  .btn:active {
+    transform: scale(0.95);
+  }
+  #theTime {
+    background-color: var(--bg-c-2);
+    border-radius: 5px;
+    padding: 1rem;
+    box-shadow: inset 0 0 15px 3px #333;
+    color: var(--green);
+  }
+  .fas {
+    font-size: 20rem;
+    position: absolute;
+  
+    top: 10vh;
+    z-index: -1;
+    color: var(--red);
+  }
+  .fa-heartbeat {
+    color: var(--red);
+  }
+  .fa-fist-raised {
+    color: var(--orange);
+  }
+  .fa-chair {
+    color: var(--green);
+  }
+  .group {
+    height: 100vh;
+    justify-content: space-evenly;
+  }
+  .group {
+    display: none;
+  }
+  .active {
+    font-size: 30vh;
+    display: flex;
+  }
+  
+  .active > .round,
+  .active > .rest {
+    font-size: 10vh;
+  }
+  
+  .round-time,
+  .rest-time {
+    background-color: var(--bg-c-2);
+    border-radius: 5px;
+    box-shadow: 0 15px 10px #333;
+    transition: all 0.2s ease;
+  }
+  
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Firefox */
+  /*input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  */
+  .animateSeconds {
+    color: var(--red);
+    animation: animateTime 1s ease;
+  }
+  
+  @keyframes animateTime {
+    from {
+      opacity: 1;
+      transform: scale(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1);
+    }
+  }

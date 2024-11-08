@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Planning</title>
+    <link rel="stylesheet" href="/training.css">
+</head>
+<body>
+    <i class="fas fa-heartbeat"></i>
+
+    <!-- create 3 stopwatches -->
+    <div class="workout-timer-container flex">
+      <header class="flex">
+        <h1 class="title">Workout Rounds Timer</h1>
+        <div class="inputs-container">
+          <div class="input-group flex">
+            <label class="roundTime">Round length</label>
+            <input type="number" id="roundTime" placeholder="minutes" />
+          </div>
+          <div class="input-group flex">
+            <label class="restTime">Rest length</label>
+            <input type="number" id="restTime" placeholder="minutes" />
+          </div>
+
+          <button class="btn" id="start" onclick="startTimer()">Start</button>
+        </div>
+        <h4>Set the duration of your Rounds and Rest Time</h4>
+
+        <h2 id="start-countdown"></h2>
+        <h2 id="displayTime"></h2>
+      </header>
+
+      <!-- todo: Round Container -->
+      <div class="rounds-container flex">
+        <section class="group flex">
+          <div class="round">Round 1</div>
+          <span class="round-time" id="round_1"></span>
+        </section>
+        <section class="group flex">
+          <div class="rest">Rest</div>
+          <span class="rest-time" id="rest_1"></span>
+        </section>
+        <section class="group flex">
+          <div class="round">Round 2</div>
+          <span class="round-time" id="round_2"></span>
+        </section>
+        <section class="group flex">
+          <div class="rest">Rest</div>
+          <span class="rest-time" id="rest_2"></span>
+        </section>
+        <section class="group flex">
+          <div class="round">Round 3</div>
+          <span class="round-time" id="round_3"></span>
+        </section>
+      </div>
+    </div>
+
+    Audio Alerts 
+    <audio id="alert10Sec" loop>
+      <source src="/Wood clack.mp3" />
+    </audio>
+    <audio id="alertStop" loop>
+      <source src="/StopRound.mp3" />
+    </audio>
+    <audio id="alertGo" loop>
+      <source src="/StartRoundBell.mp3" />
+    </audio>
+  -->
+
+    <script>
+        {
+    const myTime = setInterval(myTimer, 1000);
+    function myTimer() {
+    const today = new Date();
+    const displayTime = today.toLocaleTimeString();
+    document.getElementById("displayTime").innerHTML = displayTime;
+  }
+}
+// todo: Get Elements from the DOM
+
+const body = document.querySelector("body");
+const icon = document.querySelector("i");
+
+// ! get inputs.
+
+const roundTimeInput = document.getElementById("roundTime");
+const restTimeInput = document.getElementById("restTime");
+const startStopBtn = document.getElementById("start");
+
+// ! get Rounds and Rests
+const round1 = document.getElementById("round_1");
+const rest1 = document.getElementById("rest_1");
+const round2 = document.getElementById("round_2");
+const rest2 = document.getElementById("rest_2");
+const round3 = document.getElementById("round_3");
+
+// ! Get Alerts
+const alert10sec = document.getElementById("alert10sec");
+const alertStart = document.getElementById("alertStart");
+const alertStop = document.getElementById("alertStop");
+
+const startTimer = () => {
+  // todo: Time stemps
+
+  let roundTime = roundTimeInput.value * 60;
+  let restTime = restTimeInput.value * 60;
+  let time = "10";
+
+  //  todo: Verification
+
+  if (roundTimeInput.value === "" || restTimeInput.value === "") {
+    alert("Input Round & Rest Time!");
+    return;
+  } else {
+    // console.log("start");
+    //todo: Stop count down
+    startStopBtn.innerHTML = "Stop";
+    startStopBtn.style.backgroundColor = "#e24379";
+    startStopBtn.onclick = newWorkout;
+
+    // todo: alert 10 sec
+
+    setAlert(alert10sec);
+
+    // todo: Start The Countdown
+    const startCountdown = document.querySelector(".title");
+    setInterval(() => {
+      getReady(startCountdown);
+    }, 1000);
+
+    // todo: Start Workout
+    setTimeout(() => {
+      // todo: hide header
+      document.querySelector("header").style.display = "none";
+
+      // todo: alert Start Round
+      setAlert(alertStart);
+
+      // todo: Start First Round
+      setInterval(() => {
+        if (round1.innerText !== "0:00") {
+          //   console.log("Round 1");
+          //   ! Update Round
+          updateRound(round1);
+          round1.parentElement.classList.add("active");
+          //   ! Change Icon
+          addRemoveIconClass("fa-heartbeat", "fa-fist-raised");
+
+          //   ! Alert 10 sec
+          checkFor10Sec(round1);
+          // !Alert Stop
+
+          round1.innerText === "0:00" ? setAlert(alertStop) : round1;
+        } else if (round1.innerText === "0:00" && rest1.innerText !== "0:00") {
+          //todo: start rest 1
+          // ! Toggle Display
+          addRemoveActiveClass(round1, rest1);
+          //   ! Update Rest
+          updateRest(rest1);
+          //   ! Change Icon
+          addRemoveIconClass("fa-fist-raised", "fa-chair");
+          //   ! Alert 10 sec
+
+          checkFor10Sec(rest1);
+          // !Alert Start next Round
+
+          rest1.innerText === "0:00" ? setAlert(alertStart) : rest1;
+
+          //   ! Rest Round Time
+          resetRoundTime();
+        } else if (rest1.innerText === "0:00" && round2.innerText !== "0:00") {
+          //todo: start Round 2
+          // ! Toggle Display
+          addRemoveActiveClass(rest1, round2);
+          //   ! Update Rest
+          updateRound(round2);
+          //   ! Change Icon
+          addRemoveIconClass("fa-chair", "fa-fist-raised");
+          //   ! Alert 10 sec
+
+          checkFor10Sec(round2);
+          // !Alert Stop Round
+
+          round2.innerText === "0:00" ? setAlert(alertStop) : round2;
+
+          //   ! Rest Round Time
+          resetRestTime();
+        } else if (round2.innerText === "0:00" && rest2.innerText !== "0:00") {
+          //todo: start Rest 2
+          // ! Toggle Display
+          addRemoveActiveClass(round2, rest2);
+          //   ! Update Rest
+          updateRest(rest2);
+          //   ! Change Icon
+          addRemoveIconClass("fa-fist-raised", "fa-chair");
+          //   ! Alert 10 sec
+
+          checkFor10Sec(rest2);
+          // !Alert Start next Round
+
+          rest2.innerText === "0:00" ? setAlert(alertStart) : rest2;
+
+          //   ! Rest Round Time
+          resetRoundTime();
+        } else if (round3.innerText !== "0:00") {
+          //todo: start Round 3
+          // ! Toggle Display
+          addRemoveActiveClass(rest2, round3);
+          //   ! Update Rest
+          updateRound(round3);
+          //   ! Change Icon
+          addRemoveIconClass("fa-chair", "fa-fist-raised");
+          //   ! Alert 10 sec
+
+          checkFor10Sec(round3);
+          // !Alert Stop  Round
+
+          round3.innerText === "0:00" ? setAlert(alertStop) : round3;
+        }
+        // todo: Stop Workout and Create New Workout
+
+        if (round3.innerText === "0:00") {
+          body.innerHTML = `
+            <h1 class="title" >Done</h1>
+            <div class="inputs-container">
+              <button class="btn" onclick="newWorkout()">Again</button>
+            </div>  
+            `;
+        }
+      }, 1000);
+    }, 11000);
+
+    // ! Check for 10 secondes Marker
+
+    function checkFor10Sec(activity) {
+      activity.innerText === "0:10"
+        ? (setAlert(alert10sec), (activity.style.color = "#e24379"))
+        : activity;
+    }
+
+    // ! Create addRemoveIconClass() function
+
+    function addRemoveIconClass(currentIcon, nextIcon) {
+      icon.classList.remove(currentIcon);
+      icon.classList.add(nextIcon);
+    }
+
+    function addRemoveActiveClass(previousActivity, currentActivity) {
+      previousActivity.parentElement.classList.remove("active");
+      currentActivity.parentElement.classList.add("active");
+    }
+
+    //! Create Rounds and Rest Updates functions
+    //* Rounds
+    function updateRound(round) {
+      const minutes = Math.floor(roundTime / 60);
+      let seconds = roundTime % 60;
+
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      round.innerHTML = `${minutes}:${seconds}`;
+      roundTime--;
+    }
+    function resetRoundTime() {
+      return (roundTime = roundTimeInput.value * 60);
+    }
+    //* Rest
+    function updateRest(rest) {
+      const minutes = Math.floor(restTime / 60);
+      let seconds = restTime % 60;
+
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      rest.innerHTML = `${minutes}:${seconds}`;
+      restTime--;
+    }
+    function resetRestTime() {
+      return (restTime = restTimeInput.value * 60);
+    }
+    // ! Create Countdown Function
+
+    function getReady(element) {
+      let seconds = time % 60;
+      element.innerHTML = `
+    <div class="inputs-container flex">
+      <h4 class='title'>Get Ready in</h4>
+      <h2 id='seconds' class='active animateSeconds'>${seconds}</h2>
+     </div>
+    `;
+
+      time--;
+    }
+
+    // ! Interaction Alerts
+
+    function setAlert(alert) {
+      alert.play();
+      setTimeout(() => {
+        alert.pause();
+        alert.currentTime = 0;
+      }, 1300);
+    }
+  }
+};
+
+// ! Utility Function
+
+// todo: Stop and Restart the App
+
+const newWorkout = () => {
+  window.location.reload();
+};
+    </script>
+</body>
+</html>

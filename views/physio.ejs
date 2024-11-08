@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Physiotherapy Session</title>
+    <link rel="stylesheet" href="/styles2.css">
+</head>
+<body>
+    <header>
+        <h1>Physiotherapy Clinic</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#book">Book a Session</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>Welcome to Our Clinic</h2>
+        <p>Your health is our priority. We offer a range of physiotherapy services to help you recover and stay healthy.</p>
+    </section>
+
+    <!-- Other sections (services, about, exercises, etc.) -->
+
+    <section id="book">
+        <h2>Book a Physiotherapy Session</h2>
+        <form id="bookingForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="date">Preferred Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">Preferred Time:</label>
+            <input type="time" id="time" name="time" required>
+
+            <label for="sessionType">Session Type:</label>
+            <select id="sessionType" name="sessionType" required>
+                <option value="sports">Sports Physiotherapy</option>
+                <option value="orthopedic">Orthopedic Physiotherapy</option>
+                <option value="pediatric">Pediatric Physiotherapy</option>
+            </select>
+
+            <button type="submit">Book Now</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Physiotherapy Clinic. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('bookingForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    const sessionType = document.getElementById('sessionType').value;
+
+    console.log(`Name: ${name}`);
+    console.log(`Email: ${email}`);
+    console.log(`Phone: ${phone}`);
+    console.log(`Date: ${date}`);
+    console.log(`Time: ${time}`);
+    console.log(`Session Type: ${sessionType}`);
+
+    alert(`Thank you, ${name}! Your booking for a ${sessionType} session on ${date} at ${time} has been received. We will contact you shortly at ${email} or ${phone}.`);
+});
+
+    </script>
+</body>
+</html>
